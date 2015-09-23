@@ -1,5 +1,6 @@
 Title         : SURFnet Cyber Intelligence Framework HoneyPot design document
-Heading Base  : 2
+subtitle      : v0.1
+Heading Base  : 3
 Author        : Gijs Molenaar
 
 [TITLE]
@@ -8,10 +9,6 @@ Author        : Gijs Molenaar
 # Introduction
 
 Quick introduction about what are we making, why are we making this and who is the target user.
-
-
-# Requirements
-
 
 # Design
 
@@ -26,36 +23,90 @@ Quick introduction about what are we making, why are we making this and who is t
 * **Probe** - zero config entity that 'calls home' and routes incoming (attach) traffic to the hub. Typically
 running in monitored network.
 
+~ Center
 ![design]
+~
 
-[design]: images/design.png "design" { width=auto max-width=90% }
+[design]: images/design.png "design" { width=auto max-width=80% }
 
 
-# considerations
-
+## The network
 In the simplest case all key components described above are running on the same machine and the
-service provider network is equal to the monitored network.
+service provider network is equal to the monitored network. This will probably happen during the initial
+phases of development. In practice this wont be the case. 
 
+
+## The probe
+We want to keep the probe as simple as possible. Zero or nihil configuration, zero mainteance. Idea's are bootable USB sticks but also simple embedded systems. Still it should be possible to easily install the software on a 'normal' (desktop) computer.
+
+
+## The logging service
+
+For now all eyes are on kibana & logstash by elastic search. Logstash for storing logfiles into Elasticsearch. Kibana is an interactive data visualization and exploration tool.
+
+
+# Technical decisions made
+
+Where these is a choice of programing language we will program in Python (2.7/3.x compatible).
+
+We want to package up all software and set up a software distribution platform.
+
+We will focus on red hat enterprise linux 7 compatibility, which is equal to CentOS 7 compatibility.
+
+SURFnet is providing us with various virtual machines for testing and deployment.
+
+Development is centralized on github. The project name is [cyberintelframework]. The old SURFids software has been moved from SVN to this git repository also. Entrypoint repo is the 'main' reposiry, where also the documentation and notes are stored. 
+
+
+[cyberintelframework]: https://github.com/cyberintelframework 
+
+# Technical open questions
+
+idea is to progressivly find an answer to these questions and move them to the 'decisions made':
+
+* How to transfer the network traffic from the probe to the hub? Use honetrap-agent or VPN?
+* Make it possible to run Hub in proximity of probe? No monitored network traffic leaves the network,
+  possibly less traffic?
+* What off-the-self honeypot system are we going to use?
+* honeypot management. How do we start/stop/control the honeypots? We may use honeytrap for that. Or we use
+  honeytrap as one of the honeypots for high interaction?
+* are the old SURFids scripts of any use?
+* What are we going to store? 
+* Does CentOS properly support USB live? [maybe](https://github.com/jriguera/coreos-usb-creator) 
+* Encapsulating the honeypots. Is it useful to use containerization for honeypots? In the case of high
+  interaction honey pots yes, since the whole concept is based on this. But is it useful for low interaction
+  honeypots or is it just a obstruction?
+* Is docker a good container solution?
 
 # links
 
-## Other honeypots
- * T-pot http://dtag-dev-sec.github.io/mediator/feature/2015/03/17/concept.html#concept
- * https://www.bro.org/
+## similar products
+ * [T-pot](http://dtag-dev-sec.github.io/mediator/feature/2015/03/17/concept.html) 
+ * [honeytrap](https://github.com/honeytrap) & [honeycast](http://honeycast.io/)
+ * [SURFids](http://ids.surfnet.nl/wiki/doku.php?id=global:global) (depricated)
 
 
-
-## Honeytrap
- * https://github.com/honeytrap
- * http://honeycast.io/
-
-## VPN user portal
-https://dev.eduvpn.org/vpn-user-portal/
- om configs te gerereren voor je openvpn client
+## Honeypots and instruction detection software
+ * [bro](https://www.bro.org/)
+ * [kippo]( https://github.com/desaster/kippo)
+ * [glastopf](http://glastopf.org/)
 
 
-## debops
-http://enricozini.org/2014/debian/debops/
+## SURFids code
 
-## SURFids
-http://ids.surfnet.nl/wiki/doku.php?id=global:global
+ * [tunnel](https://github.com/cyberintelframework/tunnel)
+ * [sensor](https://github.com/cyberintelframework/sensor)
+ * [packaging-logserver](https://github.com/cyberintelframework/packaging-logserver)
+ * [packaging-tunnel](https://github.com/cyberintelframework/packaging-tunnel)
+ * [logserver](https://github.com/cyberintelframework/logserver)
+ * [argos](https://github.com/cyberintelframework/argos)
+
+
+## VPN related
+ * [eduVPN](https://github.com/eduVPN)
+
+
+## others
+
+ * [debops](http://enricozini.org/2014/debian/debops/)
+
