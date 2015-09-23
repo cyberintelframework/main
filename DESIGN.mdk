@@ -1,0 +1,61 @@
+Title         : SURFnet Cyber Intelligence Framework HoneyPot design document
+Heading Base  : 2
+Author        : Gijs Molenaar
+
+[TITLE]
+
+
+# Introduction
+
+Quick introduction about what are we making, why are we making this and who is the target user.
+
+
+# Requirements
+
+
+# Design
+
+## Key components / terminology
+
+* **Honeypot service provider network** - the entity that hosts the attack detection software.
+* **Monitored network** - the network which is beeing monitored for incomming attacks.
+* **Secure tunnel** - medium for transporting traffic from monitored network to service provider network.
+
+* **logging service** - Log collection & analysis tool/service. Typically running at service provider.
+* **Hub** - running the actual honeypot(s). Typically running at service provider.
+* **Probe** - zero config entity that 'calls home' and routes incoming (attach) traffic to the hub. Typically
+running in monitored network.
+
+![design]
+
+[design]: images/design.png "design" { width=auto max-width=90% }
+
+
+# considerations
+
+In the simplest case all key components described above are running on the same machine and the
+service provider network is equal to the monitored network.
+
+
+# links
+
+## Other honeypots
+ * T-pot http://dtag-dev-sec.github.io/mediator/feature/2015/03/17/concept.html#concept
+ * https://www.bro.org/
+
+
+
+## Honeytrap
+ * https://github.com/honeytrap
+ * http://honeycast.io/
+
+## VPN user portal
+https://dev.eduvpn.org/vpn-user-portal/
+ om configs te gerereren voor je openvpn client
+
+
+## debops
+http://enricozini.org/2014/debian/debops/
+
+## SURFids
+http://ids.surfnet.nl/wiki/doku.php?id=global:global
